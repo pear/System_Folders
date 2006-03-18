@@ -88,9 +88,10 @@ class System_Folders
     *   @access protected
     */
     var $arDocumentsWindows = array(
-        'My Documents',  //english
-        'Own Files',     //english?
-        'Eigene Dateien' //german
+        'My Documents',   //english
+        'Own Files',      //english?
+        'Eigene Dateien', //german
+        'Documenti',      //italian
     );
 
 
@@ -101,7 +102,7 @@ class System_Folders
     *   @access protected
     */
     var $arDesktop = array(
-        'Desktop' //english, german
+        'Desktop' //english, german, italian
     );
 
 
@@ -115,7 +116,8 @@ class System_Folders
     */
     var $arDocumentsLinux = array(
         'Documents',    //english
-        'Dokumente'     //german
+        'Dokumente',    //german
+        'Documenti',    //italian
     );
 
 
@@ -127,7 +129,7 @@ class System_Folders
     *   @access protected
     */
     var $arDocsAndSettings = array(
-        'C:\\Documents and Settings\\',     //english
+        'C:\\Documents and Settings\\',     //english, italian
         'C:\\Dokumente und Einstellungen\\' //german
     );
 
@@ -142,6 +144,7 @@ class System_Folders
         'C:\\Program Files\\',
         'C:\\Programs\\',
         'C:\\Programme\\',     //german
+        'C:\\Programmi\\',     //italian
     );
 
     /**
@@ -156,7 +159,8 @@ class System_Folders
     */
     var $arSharedDocumentsWindows = array(
         'Documents', //english
-        'Dokumente' //german
+        'Dokumente', //german
+        'Documenti', //italian
     );
 
     /**

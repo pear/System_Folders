@@ -21,10 +21,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <active>yes</active>
  </lead>
 
- <date>2006-03-10</date>
+ <date>2006-03-18</date>
 
  <version>
-  <release>0.1.5</release>
+  <release>0.1.6</release>
   <api>0.1.5</api>
  </version>
  <stability>
@@ -34,12 +34,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
 
  <license uri="http://www.gnu.org/licenses/lgpl.html">LGPL</license>
  <notes>
-  - Config as dependency
-  - Moved the foreach loops in a separate method
-  - Moved the arrays with known names into class variables
-  - added getAllUsers
-  - better Shared Documents detection
-  - first PEAR release
+  - Italian support
  </notes>
  <contents>
   <dir name="/" baseinstalldir="System">
@@ -74,6 +69,22 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <phprelease/>
 
  <changelog>
+  <release>
+   <version>
+    <release>0.1.6</release>
+    <api>0.1.5</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2006-03-18</date>
+   <notes>
+    - Italian support
+   </notes>
+   <license uri="http://www.gnu.org/licenses/lgpl.html">LGPL</license>
+  </release>
+
   <release>
    <version>
     <release>0.1.5</release>
