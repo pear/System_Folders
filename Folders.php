@@ -179,6 +179,39 @@ class System_Folders
         'C:\\WINXP\\'
     );
 
+    /**
+    *   COM object used in Windows to get
+    *   special folder locations via SpecialFolders()
+    *   described in
+    *   http://msdn.microsoft.com/library/default.asp?url=/library/en-us/script56/html/14761fa3-19be-4742-9f91-23b48cd9228f.asp
+    *
+    *   Available folders:
+    *   AllUsersDesktop
+    *   AllUsersStartMenu
+    *   AllUsersPrograms
+    *   AllUsersStartup
+    *   Desktop
+    *   Favorites
+    *   Fonts
+    *   MyDocuments
+    *   NetHood
+    *   PrintHood
+    *   Programs
+    *   Recent
+    *   SendTo
+    *   StartMenu
+    *   Startup
+    *   Templates
+    *
+    *   If this variable is NULL, it hasn't been created yet.
+    *   If it is FALSE, it cannot be created and used (e.g.
+    *       because COM is not available)
+    *
+    *   @var COM
+    *   @access protected
+    */
+    var $objCom = null;
+
 
 
     /**
@@ -199,7 +232,7 @@ class System_Folders
     *
     *   @param  string  The path
     *   @return string  The path with a trailing slash
-    *   @access private
+    *   @access protected
     */
     function addTrailingSlash($strPath)
     {
@@ -220,7 +253,7 @@ class System_Folders
     *
     *   @param  string  The path
     *   @return string  The fixed path
-    *   @access private
+    *   @access protected
     */
     function fixWindowsPath($strPath)
     {
@@ -240,7 +273,7 @@ class System_Folders
     *   @param string   $strBase        Base directory that shall be prepended to all paths
     *   @param string   $strSuffix      String appended to the directory path
     *   @return string      The directory that exists. NULL if none of them matched.
-    *   @access private
+    *   @access protected
     *   @static
     */
     function tryPaths($arPaths, $strBase = '', $strSuffix = '')
@@ -254,6 +287,55 @@ class System_Folders
 
         return null;
     }//function tryPaths($arPaths, $strBase = '', $strSuffix = '')
+
+
+
+    /**
+    *   Loads the COM object into the $objCom variable.
+    *
+    *   @return boolean     true if it could be loaded, false if not
+    *   @access protected
+    */
+    function loadCOM()
+    {
+        //prevent double-loading
+        if ($this->objCom !== null) {
+            return $this->objCom !== false;
+        }
+
+        if (!class_exists('COM')) {
+            $this->objCom = false;
+            return false;
+        }
+        $this->objCom = new COM('WScript.Shell');
+        if (!$this->objCom) {
+            $this->objCom = false;
+            return false;
+        }
+        return true;
+    }//function loadCOM()
+
+
+
+    /**
+    *   Loads a windows path via COM using $objCom.
+    *
+    *   @param string   $strType    See $objCom for allowed values.
+    *   @return mixed   false if no path could be obtained, string otherwise
+    *   @access protected
+    */
+    function getCOMPath($strType)
+    {
+        if (!$this->loadCOM()) {
+            return false;
+        }
+        $strPath = $this->objCom->SpecialFolders($strType);
+        if (!$strPath || $strPath == '') {
+            return false;
+        } else {
+            return $strPath;
+        }
+    }//function getCOMPath($strType)
 
 
 
@@ -340,6 +422,14 @@ class System_Folders
     function getDesktop()
     {
         $strDesktop   = null;
+
+        if ($this->sys == SYS_WINDOWS) {
+            $strDesktop = $this->getCOMPath('Desktop');
+            if ($strDesktop !== false && file_exists($strDesktop)) {
+                return $this->addTrailingSlash($this->fixWindowsPath($strDesktop));
+            }
+        }
+
         $strHome      = $this->getHome();
         if ($strHome === null) {
             return null;
@@ -364,8 +454,10 @@ class System_Folders
         $strDocuments = null;
 
         if ($this->sys == SYS_WINDOWS) {
-            //Own files may be moved by the user to a different location
-            // so that method works in most cases, but may fail in some
+            $strDocuments = $this->getCOMPath('MyDocuments');
+            if ($strDocuments !== false && file_exists($strDocuments)) {
+                return $this->addTrailingSlash($this->fixWindowsPath($strDocuments));
+            }
             $arKnownNames = $this->arDocumentsWindows;
         } else {
             $arKnownNames = $this->arDocumentsLinux;
@@ -459,13 +551,16 @@ class System_Folders
         } else if ($this->sys == SYS_MAC) {
             $strPrograms = '/Applications/';
         } else if ($this->sys == SYS_WINDOWS) {
-            $arEnv = $_SERVER + $_ENV;
-            if (isset($arEnv['ProgramFiles'])) {
-                $strPrograms = $arEnv['ProgramFiles'];
-            } else {
-                //guess it
-                $strPrograms = System_Folders::tryPaths($this->arProgramsWindows);
-            }//guess it
+            $strPrograms = $this->getCOMPath('Programs');
+            if ($strPrograms === false || !file_exists($strPrograms)) {
+                $arEnv = $_SERVER + $_ENV;
+                if (isset($arEnv['ProgramFiles'])) {
+                    $strPrograms = $arEnv['ProgramFiles'];
+                } else {
+                    //guess it
+                    $strPrograms = System_Folders::tryPaths($this->arProgramsWindows);
+                }//guess it
+            }
             $strPrograms = $this->fixWindowsPath($strPrograms);
         }//windows
 
@@ -589,7 +684,7 @@ class System_Folders
     *   Returns the windows directory (if any).
     *   NULL is returned if the system is not Windows.
     *
-    *   @return string  The windows directory
+    *   @return string  The windows directory, NULL if not on windows
     *   @access public
     */
     function getWindows()
