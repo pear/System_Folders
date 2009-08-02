@@ -1,21 +1,24 @@
 <?php
 /**
-*   Provides the locations of several system and user directories
-*   independent of the operating system used.
+* Provides the locations of several system and user directories
+* independent of the operating system used.
 *
-*   Simpe example:
-*       require_once 'System/Folders.php';
-*       $sf = new System_Folders();
-*       echo $sf->getHome();
+* Simpe example:
+*     require_once 'System/Folders.php';
+*     $sf = new System_Folders();
+*     echo $sf->getHome();
 *
-*   If you want the folders to be cached (not re-calculated on every
-*    read), use System_Folders_Cached.
+* If you want the folders to be cached (not re-calculated on every
+*  read), use System_Folders_Cached.
 *
-*   @category   System
-*   @package    System_Folders
-*   @author     Christian Weiske <cweiske@php.net>
-*   @license    LGPL
-*   @version    CVS: $Id$
+* PHP version 4
+*
+* @category System
+* @package  System_Folders
+* @author   Christian Weiske <cweiske@php.net>
+* @license  http://www.gnu.org/copyleft/lesser.html LGPL
+* @version  CVS: $Id$
+* @link     http://pear.php.net/package/System_Folders
 */
 
 require_once 'OS/Guess.php';
@@ -27,43 +30,45 @@ if (!defined('SYS_LINUX')) {
 }
 
 /**
-*   Provides the locations of several system and user directories
-*   independent of the operating system used.
+* Provides the locations of several system and user directories
+* independent of the operating system used.
 *
-*   If a path does not exist or can't be found (error), NULL is returned.
+* If a path does not exist or can't be found (error), NULL is returned.
 *
-*   The class uses both $_ENV and $_SERVER to retrieve the environment
-*    paths, as this seems to be different between php4 and 5.
+* The class uses both $_ENV and $_SERVER to retrieve the environment
+*  paths, as this seems to be different between php4 and 5.
 *
-*   @category   System
-*   @package    System_Folders
-*   @author     Christian Weiske <cweiske@php.net>
+* @category System
+* @package  System_Folders
+* @author   Christian Weiske <cweiske@php.net>
+* @license  http://www.gnu.org/copyleft/lesser.html LGPL
+* @link     http://pear.php.net/package/System_Folders
 */
 class System_Folders
 {
     /**
-    *   The operating system on which
-    *   we work here
-    *   Gotten from OS_Guess::getSysname()
+    * The operating system on which
+    * we work here
+    * Gotten from OS_Guess::getSysname()
     *
-    *   Values (are lowercase):
-    *   - windows
-    *   - linux
-    *   - darwin
+    * Values (are lowercase):
+    * - windows
+    * - linux
+    * - darwin
     *
-    *   use the SYS_* constants to check it
+    * Use the SYS_* constants to check it
     *
-    *   @var string
-    *   @access protected
+    * @var    string
+    * @access protected
     */
     var $sys = 'unknown';
 
     /**
-    *   Known names for the application directory
-    *   in windows.
+    * Known names for the application directory
+    * in windows.
     *
-    *   @var array
-    *   @access protected
+    * @var    array
+    * @access protected
     */
     var $arAppDataNames = array(
         'Application data',       //english
@@ -81,11 +86,11 @@ class System_Folders
 
 
     /**
-    *   Known names for the my documents directory
-    *   on windows.
+    * Known names for the my documents directory
+    * on windows.
     *
-    *   @var array
-    *   @access protected
+    * @var    array
+    * @access protected
     */
     var $arDocumentsWindows = array(
         'My Documents',   //english
@@ -96,10 +101,10 @@ class System_Folders
 
 
     /**
-    *   Known names for the my Desktop directory.
+    * Known names for the my Desktop directory.
     *
-    *   @var array
-    *   @access protected
+    * @var    array
+    * @access protected
     */
     var $arDesktop = array(
         'Desktop' //english, german, italian
@@ -108,11 +113,11 @@ class System_Folders
 
 
     /**
-    *   Known names for the my documents directory
-    *   on linux and mac.
+    * Known names for the my documents directory
+    * on linux and mac.
     *
-    *   @var array
-    *   @access protected
+    * @var    array
+    * @access protected
     */
     var $arDocumentsLinux = array(
         'Documents',    //english
@@ -122,11 +127,11 @@ class System_Folders
 
 
     /**
-    *   Known paths for the documents and settings directory
-    *   on windows.
+    * Known paths for the documents and settings directory
+    * on windows.
     *
-    *   @var array
-    *   @access protected
+    * @var    array
+    * @access protected
     */
     var $arDocsAndSettings = array(
         'C:\\Documents and Settings\\',     //english, italian
@@ -135,10 +140,10 @@ class System_Folders
 
 
     /**
-    *   Known paths for the programs directory on windows.
+    * Known paths for the programs directory on windows.
     *
-    *   @var array
-    *   @access protected
+    * @var    array
+    * @access protected
     */
     var $arProgramsWindows = array(
         'C:\\Program Files\\',
@@ -148,14 +153,14 @@ class System_Folders
     );
 
     /**
-    *   Known names for the shared documents directory
-    *   on windows.
-    *   Although the explorer shows "Shared documents"
-    *   or "Gemeinsame Dokumente", the *real* directory
-    *   is only one of the ones here.
+    * Known names for the shared documents directory
+    * on windows.
+    * Although the explorer shows "Shared documents"
+    * or "Gemeinsame Dokumente", the *real* directory
+    * is only one of the ones here.
     *
-    *   @var array
-    *   @access protected
+    * @var    array
+    * @access protected
     */
     var $arSharedDocumentsWindows = array(
         'Documents', //english
@@ -164,10 +169,10 @@ class System_Folders
     );
 
     /**
-    *   Known paths for the windows directory.
+    * Known paths for the windows directory.
     *
-    *   @var array
-    *   @access protected
+    * @var    array
+    * @access protected
     */
     var $arWindowsDirs = array(
         'C:\\WINDOWS\\',
@@ -180,43 +185,42 @@ class System_Folders
     );
 
     /**
-    *   COM object used in Windows to get
-    *   special folder locations via SpecialFolders()
-    *   described in
-    *   http://msdn.microsoft.com/library/default.asp?url=/library/en-us/script56/html/14761fa3-19be-4742-9f91-23b48cd9228f.asp
+    * COM object used in Windows to get
+    * special folder locations via SpecialFolders()
+    * described in
+    * @link http://msdn.microsoft.com/library/default.asp?url=/library/en-us/script56/html/14761fa3-19be-4742-9f91-23b48cd9228f.asp
     *
-    *   Available folders:
-    *   AllUsersDesktop
-    *   AllUsersStartMenu
-    *   AllUsersPrograms
-    *   AllUsersStartup
-    *   Desktop
-    *   Favorites
-    *   Fonts
-    *   MyDocuments
-    *   NetHood
-    *   PrintHood
-    *   Programs
-    *   Recent
-    *   SendTo
-    *   StartMenu
-    *   Startup
-    *   Templates
+    * Available folders:
+    * AllUsersDesktop
+    * AllUsersStartMenu
+    * AllUsersPrograms
+    * AllUsersStartup
+    * Desktop
+    * Favorites
+    * Fonts
+    * MyDocuments
+    * NetHood
+    * PrintHood
+    * Programs
+    * Recent
+    * SendTo
+    * StartMenu
+    * Startup
+    * Templates
     *
-    *   If this variable is NULL, it hasn't been created yet.
-    *   If it is FALSE, it cannot be created and used (e.g.
-    *       because COM is not available)
+    * If this variable is NULL, it hasn't been created yet.
+    * If it is FALSE, it cannot be created and used (e.g.
+    *     because COM is not available)
     *
-    *   @var COM
-    *   @access protected
+    * @var    COM
+    * @access protected
     */
     var $objCom = null;
 
 
 
     /**
-    *   Constructor; initializes the system
-    *   variable.
+    * Constructor; initializes the system variable.
     */
     function System_Folders()
     {
@@ -227,12 +231,14 @@ class System_Folders
 
 
     /**
-    *   Adds a trailing slash to the given path if there is none.
-    *   Uses DIRECTORY_SEPARATOR, so it works with windows and *nix.
+    * Adds a trailing slash to the given path if there is none.
+    * Uses DIRECTORY_SEPARATOR, so it works with windows and *nix.
     *
-    *   @param  string  The path
-    *   @return string  The path with a trailing slash
-    *   @access protected
+    * @param string $strPath The path
+    *
+    * @return string The path with a trailing slash
+    *
+    * @access protected
     */
     function addTrailingSlash($strPath)
     {
@@ -248,12 +254,14 @@ class System_Folders
 
 
     /**
-    *   Directories in windows environment variables sometimes
-    *   have a double backslash, and this needs to be fixed.
+    * Directories in windows environment variables sometimes
+    * have a double backslash, and this needs to be fixed.
     *
-    *   @param  string  The path
-    *   @return string  The fixed path
-    *   @access protected
+    * @param string $strPath The path
+    *
+    * @return string The fixed path
+    *
+    * @access protected
     */
     function fixWindowsPath($strPath)
     {
@@ -266,15 +274,17 @@ class System_Folders
 
 
     /**
-    *   Loops through a list of given paths and checks
-    *   which of them are correct.
+    * Loops through a list of given paths and checks
+    * which of them are correct.
     *
-    *   @param array    $arPaths        Array with paths to test
-    *   @param string   $strBase        Base directory that shall be prepended to all paths
-    *   @param string   $strSuffix      String appended to the directory path
-    *   @return string      The directory that exists. NULL if none of them matched.
-    *   @access protected
-    *   @static
+    * @param array  $arPaths   Array with paths to test
+    * @param string $strBase   Base directory that shall be prepended to all paths
+    * @param string $strSuffix String appended to the directory path
+    *
+    * @return string The directory that exists. NULL if none of them matched.
+    *
+    * @access protected
+    * @static
     */
     function tryPaths($arPaths, $strBase = '', $strSuffix = '')
     {
@@ -291,10 +301,11 @@ class System_Folders
 
 
     /**
-    *   Loads the COM object into the $objCom variable.
+    * Loads the COM object into the $objCom variable.
     *
-    *   @return boolean     true if it could be loaded, false if not
-    *   @access protected
+    * @return boolean True if it could be loaded, false if not
+    *
+    * @access protected
     */
     function loadCOM()
     {
@@ -318,11 +329,13 @@ class System_Folders
 
 
     /**
-    *   Loads a windows path via COM using $objCom.
+    * Loads a windows path via COM using $objCom.
     *
-    *   @param string   $strType    See $objCom for allowed values.
-    *   @return mixed   false if no path could be obtained, string otherwise
-    *   @access protected
+    * @param string $strType See $objCom for allowed values.
+    *
+    * @return mixed False if no path could be obtained, string otherwise
+    *
+    * @access protected
     */
     function getCOMPath($strType)
     {
@@ -340,20 +353,25 @@ class System_Folders
 
 
     /**
-    *   Returns the All Users directory.
-    *   Works on windows only, returns NULL if not found.
+    * Returns the All Users directory.
+    * Works on windows only, returns NULL if not found.
     *
-    *   @return string  The all users directory
-    *   @access public
+    * @return string The all users directory
+    *
+    * @access public
     */
     function getAllUsers()
     {
         if ($this->sys == SYS_WINDOWS) {
             $arEnv = $_SERVER + $_ENV;
-            if (isset($arEnv['ALLUSERSPROFILE']) && is_dir($arEnv['ALLUSERSPROFILE'])) {
+            if (isset($arEnv['ALLUSERSPROFILE'])
+                && is_dir($arEnv['ALLUSERSPROFILE'])
+            ) {
                 return $this->addTrailingSlash($arEnv['ALLUSERSPROFILE']);
             } else {
-                $strDocsAndSettings = System_Folders::tryPaths($this->arDocsAndSettings);
+                $strDocsAndSettings = System_Folders::tryPaths(
+                    $this->arDocsAndSettings
+                );
                 if ($strDocsAndSettings !== null) {
                     $strAll = $strDocsAndSettings . 'All Users';
                     if (is_dir($strAll)) {
@@ -368,22 +386,23 @@ class System_Folders
 
 
     /**
-    *   Returns the path to the application data directory.
-    *   This is the directory in which applications save their
-    *   settings.
+    * Returns the path to the application data directory.
+    * This is the directory in which applications save their
+    * settings.
     *
-    *   On Windows, this is an own directory called "Application data",
-    *   on *nix, the home directory is used.
-    *   MacOS X has two application settings directories:
-    *    - $HOME/Library/Preferences/<pref_file> for normal settings
-    *    - $HOME/Library/Application Support/<app_name>/ for data files that
-    *           that the application needs to store
-    *   This method returns the latter, as it works for both storing just
-    *    prefs and files in an application specific subdir. That's not 100%
-    *    correct for apple, but it will work.
+    * On Windows, this is an own directory called "Application data",
+    * on *nix, the home directory is used.
+    * MacOS X has two application settings directories:
+    *  - $HOME/Library/Preferences/<pref_file> for normal settings
+    *  - $HOME/Library/Application Support/<app_name>/ for data files that
+    *         that the application needs to store
+    * This method returns the latter, as it works for both storing just
+    *  prefs and files in an application specific subdir. That's not 100%
+    *  correct for apple, but it will work.
     *
-    *   @return string  The application data directory
-    *   @access public
+    * @return string  The application data directory
+    *
+    * @access public
     */
     function getAppData()
     {
@@ -402,7 +421,9 @@ class System_Folders
                 *   data there
                 */
                 $strWindows = $this->getWindows();
-                $strAppData = System_Folders::tryPaths($this->arAppDataNames, $strWindows);
+                $strAppData = System_Folders::tryPaths(
+                    $this->arAppDataNames, $strWindows
+                );
             }//appdata still null
         } else {
             $strAppData = $this->getHome();
@@ -414,10 +435,11 @@ class System_Folders
 
 
     /**
-    *   Returns the path to the user's desktop.
+    * Returns the path to the user's desktop.
     *
-    *   @return string The user's desktop
-    *   @access public
+    * @return string The user's desktop
+    *
+    * @access public
     */
     function getDesktop()
     {
@@ -443,11 +465,12 @@ class System_Folders
 
 
     /**
-    *   Returns the path to the user's documents directory.
-    *   (normally below the home folder)
+    * Returns the path to the user's documents directory.
+    * (normally below the home folder)
     *
-    *   @return string The "documents" directory
-    *   @access public
+    * @return string The "documents" directory
+    *
+    * @access public
     */
     function getDocuments()
     {
@@ -475,10 +498,11 @@ class System_Folders
 
 
     /**
-    *   Returns the path to the user's home directory.
+    * Returns the path to the user's home directory.
     *
-    *   @return string The user's home directory
-    *   @access public
+    * @return string The user's home directory
+    *
+    * @access public
     */
     function getHome()
     {
@@ -518,7 +542,9 @@ class System_Folders
                     //It seems as if the german version of windows is the only
                     //one that translated "docs and settings". All other languages
                     //use the english name
-                    $strHome = System_Folders::tryPaths($this->arDocsAndSettings) . $strUser;
+                    $strHome = System_Folders::tryPaths(
+                        $this->arDocsAndSettings
+                    ) . $strUser;
                 }
             }
             $strHome = $this->fixWindowsPath($strHome);
@@ -530,15 +556,16 @@ class System_Folders
 
 
     /**
-    *   Returns the path to the programs directory.
-    *   This is the dir where all programs are installed
-    *   normally.
+    * Returns the path to the programs directory.
+    * This is the dir where all programs are installed
+    * normally.
     *
-    *   On windows, it's mostly "C:\Programs\", on linux,
-    *   the /opt/ directory is returned.
+    * On windows, it's mostly "C:\Programs\", on linux,
+    * the /opt/ directory is returned.
     *
-    *   @return string  The programs directory
-    *   @access public
+    * @return string The programs directory
+    *
+    * @access public
     */
     function getPrograms()
     {
@@ -558,7 +585,9 @@ class System_Folders
                     $strPrograms = $arEnv['ProgramFiles'];
                 } else {
                     //guess it
-                    $strPrograms = System_Folders::tryPaths($this->arProgramsWindows);
+                    $strPrograms = System_Folders::tryPaths(
+                        $this->arProgramsWindows
+                    );
                 }//guess it
             }
             $strPrograms = $this->fixWindowsPath($strPrograms);
@@ -570,10 +599,11 @@ class System_Folders
 
 
     /**
-    *   Returns the path to the directory for temporary files.
+    * Returns the path to the directory for temporary files.
     *
-    *   @return string  The temporary directory
-    *   @access public
+    * @return string The temporary directory
+    *
+    * @access public
     */
     function getTemp()
     {
@@ -591,7 +621,9 @@ class System_Folders
                 $strTemp = $arEnv['TMP'];
             } else {
                 //guess it
-                $strTemp = System_Folders::tryPaths($this->arWindowsDirs, '', '\\Temp');
+                $strTemp = System_Folders::tryPaths(
+                    $this->arWindowsDirs, '', '\\Temp'
+                );
             }//no env variable
             $strTemp = $this->fixWindowsPath($strTemp);
         }//windows
@@ -602,14 +634,15 @@ class System_Folders
 
 
     /**
-    *   Returns the path to the shared documents directory.
+    * Returns the path to the shared documents directory.
     *
-    *   Supports windows only (at least for now) as no other
-    *   operating system seems to have such a folder.
-    *   Returns NULL on failure (not windows or not found).
+    * Supports windows only (at least for now) as no other
+    * operating system seems to have such a folder.
+    * Returns NULL on failure (not windows or not found).
     *
-    *   @return string      The shared documents dir
-    *   @access public
+    * @return string The shared documents dir
+    *
+    * @access public
     */
     function getSharedDocuments()
     {
@@ -617,7 +650,9 @@ class System_Folders
         if ($this->sys == SYS_WINDOWS) {
             $strAll = $this->getAllUsers();
             if ($strAll !== null) {
-                $strShared = System_Folders::tryPaths($this->arSharedDocumentsWindows, $strAll);
+                $strShared = System_Folders::tryPaths(
+                    $this->arSharedDocumentsWindows, $strAll
+                );
             }
         }
 
@@ -627,11 +662,12 @@ class System_Folders
 
 
     /**
-    *   Returns the name of the guesses system.
-    *   Can be compared with SYS_* constants.
+    * Returns the name of the guesses system.
+    * Can be compared with SYS_* constants.
     *
-    *   @return string  The detected system
-    *   @access public
+    * @return string The detected system
+    *
+    * @access public
     */
     function getSys()
     {
@@ -641,20 +677,21 @@ class System_Folders
 
 
     /**
-    *   Returns the name for the user
-    *   under which name the program runs.
+    * Returns the name for the user
+    * under which name the program runs.
     *
-    *   This function returns the *system user name*,
-    *   not the name with forename and surname
-    *   On unix, this would be e.g. 'fbar' or so for
-    *   the user 'Foo Bar'
+    * This function returns the *system user name*,
+    * not the name with forename and surname
+    * On unix, this would be e.g. 'fbar' or so for
+    * the user 'Foo Bar'
     *
-    *   This method is used my most other methods, so
-    *   recognizing the user name is really important.
-    *   Be sure to check this method if the others fail.
+    * This method is used my most other methods, so
+    * recognizing the user name is really important.
+    * Be sure to check this method if the others fail.
     *
-    *   @return string  The user name
-    *   @access public
+    * @return string The user name
+    *
+    * @access public
     */
     function getUserName()
     {
@@ -679,11 +716,12 @@ class System_Folders
 
 
     /**
-    *   Returns the windows directory (if any).
-    *   NULL is returned if the system is not Windows.
+    * Returns the windows directory (if any).
+    * NULL is returned if the system is not Windows.
     *
-    *   @return string  The windows directory, NULL if not on windows
-    *   @access public
+    * @return string The windows directory, NULL if not on windows
+    *
+    * @access public
     */
     function getWindows()
     {
@@ -702,7 +740,7 @@ class System_Folders
         }//no env variable
 
         return $this->addTrailingSlash($this->fixWindowsPath($strWindows));
-   }//function getWindows()
+    }//function getWindows()
 
 }//class System_Folders
 ?>

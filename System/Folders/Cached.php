@@ -1,27 +1,29 @@
 <?php
 /**
-*   Provides a cached version of System_Folders.
-*   It also has methods to read folder settings from an ini file.
+* Provides a cached version of System_Folders.
+* It also has methods to read folder settings from an ini file.
 *
-*   Simpe example:
-*       require_once 'System/Folders/Cached.php';
-*       $sf = new System_Folders_Cached();
+* Simpe example:
+*     require_once 'System/Folders/Cached.php';
+*     $sf = new System_Folders_Cached();
 *
-*       //load the stored settings from last time
-*       $sf->loadFromFile();
-*       echo $sf->getHome();
+*     //load the stored settings from last time
+*     $sf->loadFromFile();
+*     echo $sf->getHome();
 *
-*       //Set an own documents directory
-*       $sf->setDocuments('/home/cweiske/MyDocuments/');
-*       //Save the settings for next time
-*       $sf->saveToFile();
+*     //Set an own documents directory
+*     $sf->setDocuments('/home/cweiske/MyDocuments/');
+*     //Save the settings for next time
+*     $sf->saveToFile();
 *
+* PHP version 4
 *
-*   @category   System
-*   @package    System_Folders
-*   @author     Christian Weiske <cweiske@php.net>
-*   @license    LGPL
-*   @version    CVS: $Id$
+* @category System
+* @package  System_Folders
+* @author   Christian Weiske <cweiske@php.net>
+* @license  http://www.gnu.org/copyleft/lesser.html LGPL
+* @version  CVS: $Id$
+* @link     http://pear.php.net/package/System_Folders
 */
 
 require_once 'System/Folders.php';
@@ -29,36 +31,36 @@ require_once 'Config.php';
 require_once 'Config/Container.php';
 
 /**
-*   Provides a cached version of System_Folders.
-*   It also has methods to read folder settings from an ini file.
+* Provides a cached version of System_Folders.
+* It also has methods to read folder settings from an ini file.
 *
-*   Be very careful when overriding the AppData setting with
-*    setAppData()! When loading a config file without specifying the file
-*    name, the default app data directory will be used. After loading,
-*    the file will be saved to the new app data directory, thus it won't
-*    be available the next time, as the app data folder is the old one again.
+* Be very careful when overriding the AppData setting with
+*  setAppData()! When loading a config file without specifying the file
+*  name, the default app data directory will be used. After loading,
+*  the file will be saved to the new app data directory, thus it won't
+*  be available the next time, as the app data folder is the old one again.
 *
-*   @category   System
-*   @package    System_Folders
-*   @author     Christian Weiske <cweiske@php.net>
-*   @license    LGPL
-*   @version    CVS: $Id$
+* @category System
+* @package  System_Folders
+* @author   Christian Weiske <cweiske@php.net>
+* @license  http://www.gnu.org/copyleft/lesser.html LGPL
+* @link     http://pear.php.net/package/System_Folders
 */
 class System_Folders_Cached extends System_Folders
 {
     /**
-    *   The cached paths will be hold here.
+    * The cached paths will be hold here.
     *
-    *   @access protected
-    *   @var array
+    * @access protected
+    * @var    array
     */
     var $arCache = array();
 
     /**
-    *   The settings that are available.
+    * The settings that are available.
     *
-    *   @access protected
-    *   @var array
+    * @access protected
+    * @var    array
     */
     var $arSettings = array(
         'AllUsers', 'AppData', 'Desktop', 'Documents', 'Home',
@@ -67,6 +69,9 @@ class System_Folders_Cached extends System_Folders
 
 
 
+    /**
+     * Create a new instance
+     */
     function System_Folders_Cached()
     {
         parent::System_Folders();
@@ -75,13 +80,15 @@ class System_Folders_Cached extends System_Folders
 
 
     /**
-    *   Loads the directories from an ini file.
-    *   If you don't specify the config file, it will be determined
-    *    automatically.
+    * Loads the directories from an ini file.
+    * If you don't specify the config file, it will be determined
+    *  automatically.
     *
-    *   @access public
-    *   @param string   $strFile    The file to load the data from (ini file)
-    *   @return mixed   True on success, PEAR_Error on failure
+    * @param string $strFile The file to load the data from (ini file)
+    *
+    * @return mixed True on success, PEAR_Error on failure
+    *
+    * @access public
     */
     function loadFromFile($strFile = null)
     {
@@ -114,17 +121,20 @@ class System_Folders_Cached extends System_Folders
 
 
     /**
-    *   Saves the folders into a config file that can be edited by hand.
-    *   If you don't specify the config file, it will be determined
-    *    automatically.
-    *   Values that are NULL won't be saved.
+    * Saves the folders into a config file that can be edited by hand.
+    * If you don't specify the config file, it will be determined
+    *  automatically.
+    * Values that are NULL won't be saved.
     *
-    *   @access public
-    *   @param string   $strFile    The file to save the data into (ini file)
-    *   @param boolean  $bSaveAllSettings   If all settings shall be saved
-    *                           that can be loaded, or only that settings,
-    *                           that have been retrieved by the user
-    *   @return mixed   True on success, PEAR_Error on failure
+    * @param string  $strFile          The file to save the data into
+    *                                  (ini file)
+    * @param boolean $bSaveAllSettings If all settings shall be saved
+    *                         that can be loaded, or only that settings,
+    *                         that have been retrieved by the user
+    *
+    * @return mixed True on success, PEAR_Error on failure
+    *
+    * @access public
     */
     function saveToFile($strFile = null, $bSaveAllSettings = true)
     {
@@ -150,12 +160,13 @@ class System_Folders_Cached extends System_Folders
 
 
     /**
-    *   Returns the path to the default config file.
-    *   It the one that's used if no filename is passed to the
-    *    saveToFile/loadFromFile methods.
+    * Returns the path to the default config file.
+    * It the one that's used if no filename is passed to the
+    *  saveToFile/loadFromFile methods.
     *
-    *   @access public
-    *   @return string  The filename
+    * @return string The filename
+    *
+    * @access public
     */
     function getDefaultConfigFile()
     {
@@ -165,13 +176,15 @@ class System_Folders_Cached extends System_Folders
 
 
     /**
-    *   Returns a cached value.
-    *   If the cache doesn't exist, the cached value is empty or null,
-    *   the System_Folders method for the key is called to get the value.
+    * Returns a cached value.
+    * If the cache doesn't exist, the cached value is empty or null,
+    * the System_Folders method for the key is called to get the value.
     *
-    *   @access protected
-    *   @param string $strKey   The id of the value to get
-    *   @return string      The directory
+    * @param string $strKey The id of the value to get
+    *
+    * @return string The directory
+    *
+    * @access protected
     */
     function getCachedValue($strKey)
     {
@@ -187,12 +200,15 @@ class System_Folders_Cached extends System_Folders
 
 
     /**
-    *   Sets the cache of the given key to the given value.
-    *   Passing NULL removes the cache entry.
+    * Sets the cache of the given key to the given value.
+    * Passing NULL removes the cache entry.
     *
-    *   @access protected
-    *   @param string $strKey       Id of the value to get
-    *   @param string $strValue     Value to set.
+    * @param string $strKey   Id of the value to get
+    * @param string $strValue Value to set.
+    *
+    * @return void
+    *
+    * @access protected
     */
     function setCachedValue($strKey, $strValue)
     {
@@ -206,17 +222,19 @@ class System_Folders_Cached extends System_Folders
 
 
     /*
-    *   Overriding the parent's methods to cache them
+    * Overriding the parent's methods to cache them
     */
 
 
 
     /**
-    *   Cached version of getAllUsers().
+    * Cached version of getAllUsers().
     *
-    *   @access public
-    *   @see System_Folders::getAllUsers()
-    *   @return string      The all users directory
+    * @return string The all users directory
+    *
+    * @access public
+    *
+    * @see System_Folders::getAllUsers()
     */
     function getAllUsers()
     {
@@ -226,11 +244,13 @@ class System_Folders_Cached extends System_Folders
 
 
     /**
-    *   Cached version of getAppData().
+    * Cached version of getAppData().
     *
-    *   @access public
-    *   @see System_Folders::getAppData()
-    *   @return string      The application data directory
+    * @return string The application data directory
+    *
+    * @access public
+    *
+    * @see System_Folders::getAppData()
     */
     function getAppData()
     {
@@ -240,11 +260,13 @@ class System_Folders_Cached extends System_Folders
 
 
     /**
-    *   Cached version of getDesktop().
+    * Cached version of getDesktop().
     *
-    *   @access public
-    *   @see System_Folders::getDesktop()
-    *   @return string      The desktop directory
+    * @return string The desktop directory
+    *
+    * @access public
+    *
+    * @see System_Folders::getDesktop()
     */
     function getDesktop()
     {
@@ -254,11 +276,13 @@ class System_Folders_Cached extends System_Folders
 
 
     /**
-    *   Cached version of getDocuments().
+    * Cached version of getDocuments().
     *
-    *   @access public
-    *   @see System_Folders::getDocuments()
-    *   @return string      The documents directory
+    * @return string The documents directory
+    *
+    * @access public
+    *
+    * @see System_Folders::getDocuments()
     */
     function getDocuments()
     {
@@ -268,11 +292,13 @@ class System_Folders_Cached extends System_Folders
 
 
     /**
-    *   Cached version of getHome().
+    * Cached version of getHome().
     *
-    *   @access public
-    *   @see System_Folders::getHome()
-    *   @return string      The home directory
+    * @return string The home directory
+    *
+    * @access public
+    *
+    * @see System_Folders::getHome()
     */
     function getHome()
     {
@@ -282,11 +308,13 @@ class System_Folders_Cached extends System_Folders
 
 
     /**
-    *   Cached version of getPrograms().
+    * Cached version of getPrograms().
     *
-    *   @access public
-    *   @see System_Folders::getPrograms()
-    *   @return string      The programs directory
+    * @return string The programs directory
+    *
+    * @access public
+    *
+    * @see System_Folders::getPrograms()
     */
     function getPrograms()
     {
@@ -296,11 +324,13 @@ class System_Folders_Cached extends System_Folders
 
 
     /**
-    *   Cached version of getTemp().
+    * Cached version of getTemp().
     *
-    *   @access public
-    *   @see System_Folders::getTemp()
-    *   @return string      The temporary directory
+    * @return string The temporary directory
+    *
+    * @access public
+    *
+    * @see System_Folders::getTemp()
     */
     function getTemp()
     {
@@ -310,11 +340,13 @@ class System_Folders_Cached extends System_Folders
 
 
     /**
-    *   Cached version of getSharedDocuments().
+    * Cached version of getSharedDocuments().
     *
-    *   @access public
-    *   @see System_Folders::getSharedDocuments()
-    *   @return string      The shared documents directory
+    * @return string The shared documents directory
+    *
+    * @access public
+    *
+    * @see System_Folders::getSharedDocuments()
     */
     function getSharedDocuments()
     {
@@ -324,11 +356,13 @@ class System_Folders_Cached extends System_Folders
 
 
     /**
-    *   Cached version of getWindows().
+    * Cached version of getWindows().
     *
-    *   @access public
-    *   @see System_Folders::getWindows()
-    *   @return string      The windows directory
+    * @return string The windows directory
+    *
+    * @access public
+    *
+    * @see System_Folders::getWindows()
     */
     function getWindows()
     {
@@ -338,19 +372,22 @@ class System_Folders_Cached extends System_Folders
 
 
     /*
-    *   Setter methods
+    * Setter methods
     */
 
 
 
     /**
-    *   Sets an own all users directory.
-    *   Set it to NULL to deactivate saving and
-    *    remove the value from the cache.
+    * Sets an own all users directory.
+    * Set it to NULL to deactivate saving and
+    *  remove the value from the cache.
     *
-    *   @access public
-    *   @see getAllUsers
-    *   @param string $value    The new all users directory
+    * @param string $value The new all users directory
+    *
+    * @return void
+    *
+    * @access public
+    * @see    getAllUsers()
     */
     function setAllUsers($value)
     {
@@ -360,13 +397,16 @@ class System_Folders_Cached extends System_Folders
 
 
     /**
-    *   Sets an own application data directory.
-    *   Set it to NULL to deactivate saving and
-    *    remove the value from the cache.
+    * Sets an own application data directory.
+    * Set it to NULL to deactivate saving and
+    *  remove the value from the cache.
     *
-    *   @access public
-    *   @see getAppData
-    *   @param string $value    The new app data directory
+    * @param string $value The new app data directory
+    *
+    * @return void
+    *
+    * @access public
+    * @see    getAppData()
     */
     function setAppData($value)
     {
@@ -376,13 +416,16 @@ class System_Folders_Cached extends System_Folders
 
 
     /**
-    *   Sets an own desktop directory.
-    *   Set it to NULL to deactivate saving and
-    *    remove the value from the cache.
+    * Sets an own desktop directory.
+    * Set it to NULL to deactivate saving and
+    *  remove the value from the cache.
     *
-    *   @access public
-    *   @see getDesktop
-    *   @param string $value    The new desktop directory
+    * @param string $value The new desktop directory
+    *
+    * @return void
+    *
+    * @access public
+    * @see    getDesktop()
     */
     function setDesktop($value)
     {
@@ -392,13 +435,16 @@ class System_Folders_Cached extends System_Folders
 
 
     /**
-    *   Sets an own documents directory.
-    *   Set it to NULL to deactivate saving and
-    *    remove the value from the cache.
+    * Sets an own documents directory.
+    * Set it to NULL to deactivate saving and
+    *  remove the value from the cache.
     *
-    *   @access public
-    *   @see getDocuments
-    *   @param string $value    The new documents directory
+    * @param string $value The new documents directory
+    *
+    * @return void
+    *
+    * @access public
+    * @see    getDocuments()
     */
     function setDocuments($value)
     {
@@ -408,13 +454,16 @@ class System_Folders_Cached extends System_Folders
 
 
     /**
-    *   Sets an own home directory.
-    *   Set it to NULL to deactivate saving and
-    *    remove the value from the cache.
+    * Sets an own home directory.
+    * Set it to NULL to deactivate saving and
+    *  remove the value from the cache.
     *
-    *   @access public
-    *   @see getHome
-    *   @param string $value    The new home directory
+    * @param string $value The new home directory
+    *
+    * @return void
+    *
+    * @access public
+    * @see    getHome()
     */
     function setHome($value)
     {
@@ -424,13 +473,16 @@ class System_Folders_Cached extends System_Folders
 
 
     /**
-    *   Sets an own programs directory.
-    *   Set it to NULL to deactivate saving and
-    *    remove the value from the cache.
+    * Sets an own programs directory.
+    * Set it to NULL to deactivate saving and
+    *  remove the value from the cache.
     *
-    *   @access public
-    *   @see getPrograms
-    *   @param string $value    The new programs directory
+    * @param string $value The new programs directory
+    *
+    * @return void
+    *
+    * @access public
+    * @see    getPrograms()
     */
     function setPrograms($value)
     {
@@ -440,13 +492,16 @@ class System_Folders_Cached extends System_Folders
 
 
     /**
-    *   Sets an own temp directory.
-    *   Set it to NULL to deactivate saving and
-    *    remove the value from the cache.
+    * Sets an own temp directory.
+    * Set it to NULL to deactivate saving and
+    *  remove the value from the cache.
     *
-    *   @access public
-    *   @see getTemp
-    *   @param string $value    The new temp directory
+    * @param string $value The new temp directory
+    *
+    * @return void
+    *
+    * @access public
+    * @see    getTemp()
     */
     function setTemp($value)
     {
@@ -456,13 +511,16 @@ class System_Folders_Cached extends System_Folders
 
 
     /**
-    *   Sets an own shared documents directory.
-    *   Set it to NULL to deactivate saving and
-    *    remove the value from the cache.
+    * Sets an own shared documents directory.
+    * Set it to NULL to deactivate saving and
+    *  remove the value from the cache.
     *
-    *   @access public
-    *   @see getSharedDocuments
-    *   @param string $value    The new shared documents directory
+    * @param string $value The new shared documents directory
+    *
+    * @return void
+    *
+    * @access public
+    * @see    getSharedDocuments()
     */
     function setSharedDocuments($value)
     {
@@ -472,13 +530,16 @@ class System_Folders_Cached extends System_Folders
 
 
     /**
-    *   Sets an own windows directory.
-    *   Set it to NULL to deactivate saving and
-    *    remove the value from the cache.
+    * Sets an own windows directory.
+    * Set it to NULL to deactivate saving and
+    *  remove the value from the cache.
     *
-    *   @access public
-    *   @see getWindows
-    *   @param string $value    The new windows directory
+    * @param string $value The new windows directory
+    *
+    * @return void
+    *
+    * @access public
+    * @see    getWindows()
     */
     function setWindows($value)
     {
