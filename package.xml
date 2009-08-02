@@ -37,10 +37,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Use COM to determine some windows paths (bug #9513)
  </notes>
  <contents>
-  <dir name="/" baseinstalldir="System">
-   <file name="Folders.php" role="php"/>
-   <dir name="Folders">
-    <file name="Cached.php" role="php"/>
+  <dir name="/">
+   <dir name="System">
+    <file name="Folders.php" role="php"/>
+    <dir name="Folders">
+     <file name="Cached.php" role="php"/>
+    </dir>
    </dir>
    <dir name="examples">
     <file name="cached.php" role="doc"/>
