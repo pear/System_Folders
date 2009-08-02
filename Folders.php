@@ -659,15 +659,13 @@ class System_Folders
     function getUserName()
     {
         $strUser = null;
-        if ($this->sys == SYS_LINUX) {
+        if ($this->sys == SYS_LINUX
+            || $this->sys == SYS_MAC
+        ) {
             if (isset($_ENV['USER'])) {
                 $strUser = $_ENV['USER'];
             } else {
                 $strUser = trim(`whoami`);
-            }
-        } else if ($this->sys == SYS_MAC) {
-            if (isset($_ENV['USER'])) {
-                $strUser = $_ENV['USER'];
             }
         } else if ($this->sys == SYS_WINDOWS) {
             $arEnv = $_SERVER + $_ENV;
