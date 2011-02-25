@@ -1,39 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package packagerversion="1.9.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+<package packagerversion="1.9.1"
+         version="2.0"
+         xmlns="http://pear.php.net/dtd/package-2.0"
+         xmlns:tasks="http://pear.php.net/dtd/tasks-1.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+                             http://pear.php.net/dtd/tasks-1.0.xsd
+                             http://pear.php.net/dtd/package-2.0
+                             http://pear.php.net/dtd/package-2.0.xsd"
+>
  <name>System_Folders</name>
  <channel>pear.php.net</channel>
  <summary>Location of system folders</summary>
- <description>Calculates or guesses the location of
-  system folders like temp, desktop and others.</description>
+ <description>
+  Calculates or guesses the location of system folders like temp, desktop
+  and others.
+ </description>
+
  <lead>
   <name>Christian Weiske</name>
   <user>cweiske</user>
   <email>cweiske@php.net</email>
   <active>yes</active>
  </lead>
- <date>2010-10-26</date>
- <time>01:36:54</time>
+ <date>2011-02-26</date>
+ <time>22:00:23</time>
+
  <version>
-  <release>1.0.3</release>
+  <release>1.0.4</release>
   <api>1.0.0</api>
  </version>
  <stability>
   <release>stable</release>
   <api>stable</api>
  </stability>
+
  <license uri="http://www.gnu.org/licenses/lgpl.html">LGPL</license>
+
  <notes>
-Automatically built QA release
-Bug #15658 getUserName() fails on mac when _ENV not set - cweiske
+  - Fix bug #18157: Root home directory not recognized correctly [afshin]
  </notes>
+
  <contents>
-  <dir baseinstalldir="/" name="/">
-   <file baseinstalldir="/" md5sum="354eff8f962ed300d99d732dafa3e12d" name="examples/cached.php" role="doc" />
-   <file baseinstalldir="/" md5sum="ca6c4346a416e616717aa104bd4829a6" name="examples/example.php" role="doc" />
-   <file baseinstalldir="/" md5sum="5b0a17d7a3a15a46e03f5751b1a53fc7" name="System/Folders.php" role="php" />
-   <file baseinstalldir="/" md5sum="a1365be3dde30ffff49ff2cfa0573844" name="System/Folders/Cached.php" role="php" />
+  <dir name="/">
+   <dir name="examples">
+    <file name="cached.php" role="doc" />
+    <file name="example.php" role="doc" />
+   </dir>
+   <dir name="System">
+    <file name="Folders.php" role="php" />
+    <file name="Folders/Cached.php" role="php" />
+   </dir>
   </dir>
  </contents>
+
  <dependencies>
   <required>
    <php>
@@ -50,7 +70,9 @@ Bug #15658 getUserName() fails on mac when _ENV not set - cweiske
    </package>
   </required>
  </dependencies>
+
  <phprelease />
+
  <changelog>
   <release>
    <version>
@@ -66,6 +88,7 @@ Bug #15658 getUserName() fails on mac when _ENV not set - cweiske
 Initial release
    </notes>
   </release>
+
   <release>
    <version>
     <release>0.1.1</release>
@@ -81,6 +104,7 @@ Initial release
 - Fix example to use the right include directory
    </notes>
   </release>
+
   <release>
    <version>
     <release>0.1.2</release>
@@ -97,6 +121,7 @@ Initial release
    </notes>
    <license uri="http://www.gnu.org/licenses/lgpl.html">LGPL</license>
   </release>
+
   <release>
    <version>
     <release>0.1.3</release>
@@ -112,6 +137,7 @@ Initial release
    </notes>
    <license uri="http://www.gnu.org/licenses/lgpl.html">LGPL</license>
   </release>
+
   <release>
    <version>
     <release>0.1.4</release>
@@ -127,6 +153,7 @@ Initial release
    </notes>
    <license uri="http://www.gnu.org/licenses/lgpl.html">LGPL</license>
   </release>
+
   <release>
    <version>
     <release>0.1.5</release>
@@ -147,6 +174,7 @@ Initial release
    </notes>
    <license uri="http://www.gnu.org/licenses/lgpl.html">LGPL</license>
   </release>
+
   <release>
    <version>
     <release>0.1.6</release>
@@ -177,6 +205,7 @@ Initial release
    </notes>
    <license uri="http://www.gnu.org/licenses/lgpl.html">LGPL</license>
   </release>
+
   <release>
    <version>
     <release>1.0.1</release>
@@ -193,6 +222,7 @@ Initial release
    </notes>
    <license uri="http://www.gnu.org/licenses/lgpl.html">LGPL</license>
   </release>
+
   <release>
    <version>
     <release>1.0.2</release>
@@ -209,6 +239,7 @@ Initial release
    </notes>
    <license uri="http://www.gnu.org/licenses/lgpl.html">LGPL</license>
   </release>
+
   <release>
    <version>
     <release>1.0.3</release>
@@ -225,5 +256,22 @@ Automatically built QA release
 Bug #15658 getUserName() fails on mac when _ENV not set - cweiske
    </notes>
   </release>
+
+  <release>
+   <version>
+    <release>1.0.4</release>
+    <api>1.0.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2011-02-25</date>
+   <license uri="http://www.gnu.org/licenses/lgpl.html">LGPL</license>
+   <notes>
+    - Fix bug #18157: Root home directory not recognized correctly [afshin]
+   </notes>
+  </release>
+
  </changelog>
 </package>

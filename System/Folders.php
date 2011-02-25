@@ -24,9 +24,9 @@
 require_once 'OS/Guess.php';
 
 if (!defined('SYS_LINUX')) {
-    define('SYS_LINUX'  , 'linux');
+    define('SYS_LINUX', 'linux');
     define('SYS_WINDOWS', 'windows');
-    define('SYS_MAC'    , 'darwin');
+    define('SYS_MAC', 'darwin');
 }
 
 /**
@@ -514,7 +514,9 @@ class System_Folders
             } else {
                 //env not set, so try the default directory
                 $strUser = $this->getUserName();
-                if ($strUser !== null) {
+                if ($strUser == 'root') {
+                    $strHome = '/root';
+                } else if ($strUser !== null) {
                     $strHome = '/home/' . $strUser;
                 }
             }
