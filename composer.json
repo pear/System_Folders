@@ -1,4 +1,5 @@
 {
+    "name": "pear/system_folders",
     "authors": [
         {
             "email": "cweiske@php.net",
